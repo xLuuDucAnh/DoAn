@@ -16,7 +16,7 @@ const OrderSummary = () => {
 
   const makeMoMoPayment = async () => {
     try {
-      const amountVND = Math.round(grandTotal * 25000);
+      const amountVND = Math.round(grandTotal);
       if (amountVND < 1000) {
         window.alert("Số tiền thanh toán phải từ 1,000 VND trở lên.");
         return;
@@ -57,13 +57,13 @@ const OrderSummary = () => {
           Sản phẩm đã chọn : {selectedItems}
         </p>
         <p className="text-dark mt-2">
-          Tổng tiền hàng : ${totalPrice.toFixed(2)}
+          Tổng tiền hàng : {new Intl.NumberFormat('vi-VN').format(totalPrice)} đ
         </p>
         <p className="text-dark mt-2">
-          Thuế ({taxRate * 100}%): ${tax.toFixed(2)}
+          Thuế ({taxRate * 100}%): {new Intl.NumberFormat('vi-VN').format(tax)} đ
         </p>
         <h3 className="font-semibold text-dark mt-4">
-          Tổng cộng ${grandTotal.toFixed(2)}
+          Tổng cộng {new Intl.NumberFormat('vi-VN').format(grandTotal)} đ
         </h3>
       </div>
       <div className="px-4 pb-6">

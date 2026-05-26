@@ -8,10 +8,10 @@ import category4 from "../../assets/category-4.jpg"
 
 const Categories = () => {
     const categories = [
-        { name: 'Accessories', path: 'accessories', image: category1 },
-        { name: 'Dress Collection', path: 'dress', image: category2 },
-        { name: 'Jewellery', path: 'jewellery', image: category3},
-        { name: 'Cosmetics', path: 'cosmetics', image: category4 },
+        { name: 'Áo Nam', path: 'ao-nam-phong', image: category1 },
+        { name: 'Áo Nữ', path: 'so-mi-nu', image: category2 },
+        { name: 'Đầm Thời Trang', path: 'dam-dao-pho', image: category3},
+        { name: 'Phụ Kiện', path: 'tui-xach', image: category4 },
     ];
 
     return (

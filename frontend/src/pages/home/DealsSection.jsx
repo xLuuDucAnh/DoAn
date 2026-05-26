@@ -9,30 +9,27 @@ const DealsSection = () => {
       <img src={dealsImg} alt="deals" />
     </div>
     <div className="deals__content">
-      <h5>Get Up To 20% Discount</h5>
-      <h4>Deals Of This Month</h4>
+      <h5>Giảm giá lên đến 20%</h5>
+      <h4>Ưu đãi của tháng này</h4>
       <p>
-        Our Women's Fashion Deals of the Month are here to make your style
-        dreams a reality without breaking the bank. Discover a curated
-        collection of exquisite clothing, accessories, and footwear, all
-        handpicked to elevate your wardrobe.
+        Những ưu đãi thời trang nữ của tháng đã sẵn sàng để biến giấc mơ phong cách của bạn thành hiện thực mà không tốn quá nhiều chi phí. Khám phá bộ sưu tập trang phục, phụ kiện và giày dép tinh tế, tất cả được tuyển chọn để nâng tầm tủ đồ của bạn.
       </p>
       <div className="deals__countdown flex-wrap">
         <div className="deals__countdown__card">
           <h4>14</h4>
-          <p>Days</p>
+          <p>Ngày</p>
         </div>
         <div className="deals__countdown__card">
           <h4>20</h4>
-          <p>Hours</p>
+          <p>Giờ</p>
         </div>
         <div className="deals__countdown__card">
           <h4>15</h4>
-          <p>Mins</p>
+          <p>Phút</p>
         </div>
         <div className="deals__countdown__card">
           <h4>05</h4>
-          <p>Secs</p>
+          <p>Giây</p>
         </div>
       </div>
     </div>

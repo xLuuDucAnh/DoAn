@@ -22,7 +22,7 @@ const ReviewsCard = ({ productReviews }) => {
             <div>
                 {reviews.length > 0 ? (
                     <div>
-                        <h3 className="text-lg font-medium">All Comments...</h3>
+                        <h3 className="text-lg font-medium">Tất cả nhận xét...</h3>
                         <div>
                             {reviews.map((review, index) => (
                                 <div key={index} className="mt-4">
@@ -48,7 +48,7 @@ const ReviewsCard = ({ productReviews }) => {
                         </div>
                     </div>
                 ) : (
-                    <p>No reviews yet.</p>
+                    <p>Chưa có đánh giá nào.</p>
                 )}
             </div>
 
@@ -58,7 +58,7 @@ const ReviewsCard = ({ productReviews }) => {
                     onClick={handleOpenReviewModal}
                     className="px-6 py-3 bg-primary text-white rounded-md flex items-center gap-2"
                 >
-                    <i className="ri-pencil-line mr-2"></i> Add A Comment
+                    <i className="ri-pencil-line mr-2"></i> Thêm nhận xét
                 </button>
             </div>
 

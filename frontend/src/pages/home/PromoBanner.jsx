@@ -5,24 +5,23 @@ const PromoBanner = () => {
     <section className="section__container banner__container">
       <div className="banner__card">
         <span><i className="ri-truck-line"></i></span>
-        <h4>Free Delivery</h4>
+        <h4>Miễn phí vận chuyển</h4>
         <p>
-          Offers convenience and the ability to shop from anywhere, anytime.
+          Mang lại sự tiện lợi và khả năng mua sắm từ mọi nơi, mọi lúc.
         </p>
       </div>
       <div className="banner__card">
         <span><i className="ri-money-dollar-circle-line"></i></span>
-        <h4>100% Money Back Guaranty</h4>
+        <h4>Hoàn tiền 100%</h4>
         <p>
-          E-commerce have a review system where customers can share feedback.
+          Thương mại điện tử có hệ thống đánh giá để khách hàng có thể chia sẻ phản hồi.
         </p>
       </div>
       <div className="banner__card">
         <span><i className="ri-user-voice-fill"></i></span>
-        <h4>Strong Support</h4>
+        <h4>Hỗ trợ nhiệt tình</h4>
         <p>
-          Offer customer support services to assist customers with queries and
-          issues.
+          Cung cấp các dịch vụ hỗ trợ khách hàng để giải đáp các thắc mắc và vấn đề của họ.
         </p>
       </div>
     </section>

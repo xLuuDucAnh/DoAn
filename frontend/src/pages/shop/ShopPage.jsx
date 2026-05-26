@@ -3,14 +3,86 @@ import ProductCards from './ProductCards';
 import ShopFiltering from './ShopFiltering';
 import { useFetchAllProductsQuery } from '../../redux/features/products/productsApi';
 
+const categoryGroups = [
+    {
+        name: 'Áo nam',
+        subcategories: [
+            { label: 'Áo phông', value: 'ao-nam-phong' },
+            { label: 'Polo', value: 'ao-nam-polo' },
+            { label: 'Sơ mi dài', value: 'ao-nam-so-mi-dai' },
+            { label: 'Sơ mi ngắn', value: 'ao-nam-so-mi-ngan' }
+        ]
+    },
+    {
+        name: 'Quần nam',
+        subcategories: [
+            { label: 'Quần âu', value: 'quan-nam-au' },
+            { label: 'Quần jeans', value: 'quan-nam-jeans' },
+            { label: 'Quần kaki', value: 'quan-nam-kaki' },
+            { label: 'Quần jogger', value: 'quan-nam-jogger' }
+        ]
+    },
+    {
+        name: 'Phụ kiện nam',
+        subcategories: [
+            { label: 'Giày, dép', value: 'giay-dep-nam' },
+            { label: 'Mũ', value: 'mu-nam' },
+            { label: 'Ví da', value: 'vi-da-nam' },
+            { label: 'Thắt lưng', value: 'that-lung-nam' }
+        ]
+    },
+    {
+        name: 'Áo nữ',
+        subcategories: [
+            { label: 'Sơ mi nữ', value: 'so-mi-nu' },
+            { label: 'Áo dài', value: 'ao-dai' },
+            { label: 'Áo hai dây', value: 'ao-hai-day' },
+            { label: 'Áo dệt kim', value: 'ao-det-kim' }
+        ]
+    },
+    {
+        name: 'Quần nữ',
+        subcategories: [
+            { label: 'Quần dài nữ', value: 'quan-dai-nu' },
+            { label: 'Quần lửng nữ', value: 'quan-lung-nu' },
+            { label: 'Quần jean nữ', value: 'quan-jean-nu' }
+        ]
+    },
+    {
+        name: 'Đầm',
+        subcategories: [
+            { label: 'Đầm công sở', value: 'dam-cong-so' },
+            { label: 'Đầm dạo phố', value: 'dam-dao-pho' },
+            { label: 'Đầm dạ hội', value: 'dam-da-hoi' },
+            { label: 'Váy đầm hoa', value: 'vay-dam-hoa' }
+        ]
+    },
+    {
+        name: 'Chân váy',
+        subcategories: [
+            { label: 'Chân váy dài', value: 'chan-vay-dai' },
+            { label: 'Chân váy ngắn', value: 'chan-vay-ngan' }
+        ]
+    },
+    {
+        name: 'Phụ kiện nữ',
+        subcategories: [
+            { label: 'Túi xách', value: 'tui-xach' },
+            { label: 'Khăn', value: 'khan' },
+            { label: 'Vòng cổ', value: 'vong-co' },
+            { label: 'Nước hoa', value: 'nuoc-hoa' }
+        ]
+    }
+];
+
 const filters = {
-    categories: ['all', 'accessories', 'dress', 'jewellery', 'cosmetics'],
+    categories: ['all', ...categoryGroups.flatMap(group => group.subcategories.map(sub => sub.value))],
     colors: ['all', 'black', 'red', 'gold', 'blue', 'silver', 'beige', 'green'],
     priceRanges: [
-        { label: 'Dưới $50', min: 0, max: 50 },
-        { label: '$50 - $100', min: 50, max: 100 },
-        { label: '$100 - $200', min: 100, max: 200 },
-        { label: 'Trên $200', min: 200, max: Infinity }
+        { label: 'Dưới 1.000.000 đ', min: 0, max: 1000000 },
+        { label: '1.000.000 đ - 2.000.000 đ', min: 1000000, max: 2000000 },
+        { label: '2.000.000 đ - 5.000.000 đ', min: 2000000, max: 5000000 },
+        { label: 'Trên 5.000.000 đ', min: 5000000, max: Infinity }
     ]
 };
 
@@ -71,6 +143,7 @@ const ShopPage = () => {
                     {/* left side */}
                     <ShopFiltering
                         filters={filters}
+                        categoryGroups={categoryGroups}
                         filtersState={filtersState}
                         setFiltersState={setFiltersState}
                         clearFilters={clearFilters}

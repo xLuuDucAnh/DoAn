@@ -38,7 +38,7 @@ const ProductCards = ({ products }) => {
                     </div>
                     <div className="product__card__content">
                         <h4>{product.name}</h4>
-                        <p>${product.price} {product.oldPrice ? <s>${product.oldPrice}</s> : null}</p>
+                        <p>{new Intl.NumberFormat('vi-VN').format(product.price)} đ {product.oldPrice ? <s>{new Intl.NumberFormat('vi-VN').format(product.oldPrice)} đ</s> : null}</p>
                         <RatingStars rating={product.rating} />
                     </div>
                 </div>

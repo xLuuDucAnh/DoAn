@@ -33,7 +33,7 @@ const PostAReview = ({ isModalOpen, handleClose }) => {
         try {
             const response = await postReview(newComment).unwrap();
             console.log(response)
-            alert('Comment posted successfully!')
+            alert('Nhận xét đã được đăng thành công!')
             setRating(0);
             setComment('');
             refetch();
@@ -49,7 +49,7 @@ const PostAReview = ({ isModalOpen, handleClose }) => {
                 }`}
         >
             <div className="bg-white p-6 rounded-md shadow-lg w-96 z-50">
-                <h2 className="text-lg font-bold mb-4">Post a Review</h2>
+                <h2 className="text-lg font-bold mb-4">Gửi nhận xét</h2>
 
                 <div className="flex items-center mb-4">
                     {[1, 2, 3, 4, 5].map((star) => (
@@ -72,7 +72,7 @@ const PostAReview = ({ isModalOpen, handleClose }) => {
                     onChange={(e) => setComment(e.target.value)}
                     rows="4"
                     className="w-full border border-gray-300 p-2 rounded-md mb-4"
-                    placeholder="Write your comment here..."
+                    placeholder="Viết nhận xét của bạn ở đây..."
                 />
 
                 <div className="flex justify-end gap-2">
@@ -80,13 +80,13 @@ const PostAReview = ({ isModalOpen, handleClose }) => {
                         onClick={handleClose}
                         className="px-4 py-2 bg-gray-300 rounded-md flex items-center gap-2"
                     >
-                        <i className="ri-close-line"></i> Cancel
+                        <i className="ri-close-line"></i> Hủy
                     </button>
                     <button
                         onClick={handleSubmit}
                         className="px-4 py-2 bg-primary text-white rounded-md flex items-center gap-2"
                     >
-                        <i className="ri-check-line"></i> Submit
+                        <i className="ri-check-line"></i> Gửi
                     </button>
                 </div>
             </div>

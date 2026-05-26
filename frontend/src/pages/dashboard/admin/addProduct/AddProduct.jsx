@@ -7,11 +7,36 @@ import UploadImage from './UploadImage';
 import { useNavigate } from 'react-router-dom';
 
 const categories = [
-    { label: 'Select Category', value: '' },
-    { label: 'Accessories', value: 'accessories' },
-    { label: 'Dress', value: 'dress' },
-    { label: 'Jewellery', value: 'jewellery' },
-    { label: 'Cosmetics', value: 'cosmetics' }
+    { label: 'Chọn Danh Mục', value: '' },
+    { label: 'Áo phông nam', value: 'ao-nam-phong' },
+    { label: 'Polo nam', value: 'ao-nam-polo' },
+    { label: 'Sơ mi dài nam', value: 'ao-nam-so-mi-dai' },
+    { label: 'Sơ mi ngắn nam', value: 'ao-nam-so-mi-ngan' },
+    { label: 'Quần âu nam', value: 'quan-nam-au' },
+    { label: 'Quần jeans nam', value: 'quan-nam-jeans' },
+    { label: 'Quần kaki nam', value: 'quan-nam-kaki' },
+    { label: 'Quần jogger nam', value: 'quan-nam-jogger' },
+    { label: 'Giày dép nam', value: 'giay-dep-nam' },
+    { label: 'Mũ nam', value: 'mu-nam' },
+    { label: 'Ví da nam', value: 'vi-da-nam' },
+    { label: 'Thắt lưng nam', value: 'that-lung-nam' },
+    { label: 'Sơ mi nữ', value: 'so-mi-nu' },
+    { label: 'Áo dài', value: 'ao-dai' },
+    { label: 'Áo hai dây', value: 'ao-hai-day' },
+    { label: 'Áo dệt kim', value: 'ao-det-kim' },
+    { label: 'Quần dài nữ', value: 'quan-dai-nu' },
+    { label: 'Quần lửng nữ', value: 'quan-lung-nu' },
+    { label: 'Quần jean nữ', value: 'quan-jean-nu' },
+    { label: 'Đầm công sở', value: 'dam-cong-so' },
+    { label: 'Đầm dạo phố', value: 'dam-dao-pho' },
+    { label: 'Đầm dạ hội', value: 'dam-da-hoi' },
+    { label: 'Váy đầm hoa', value: 'vay-dam-hoa' },
+    { label: 'Chân váy dài', value: 'chan-vay-dai' },
+    { label: 'Chân váy ngắn', value: 'chan-vay-ngan' },
+    { label: 'Túi xách', value: 'tui-xach' },
+    { label: 'Khăn', value: 'khan' },
+    { label: 'Vòng cổ', value: 'vong-co' },
+    { label: 'Nước hoa', value: 'nuoc-hoa' }
 ];
 
 const colors = [

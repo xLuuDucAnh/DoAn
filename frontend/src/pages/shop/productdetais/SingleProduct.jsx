@@ -18,24 +18,67 @@ const SingleProduct = () => {
     const productReviews = data?.reviews || [];
     // console.log(productReviews)
 
+    const categoryLabels = {
+        'ao-nam-phong': 'Áo phông nam',
+        'ao-nam-polo': 'Polo nam',
+        'ao-nam-so-mi-dai': 'Sơ mi dài nam',
+        'ao-nam-so-mi-ngan': 'Sơ mi ngắn nam',
+        'quan-nam-au': 'Quần âu nam',
+        'quan-nam-jeans': 'Quần jeans nam',
+        'quan-nam-kaki': 'Quần kaki nam',
+        'quan-nam-jogger': 'Quần jogger nam',
+        'giay-dep-nam': 'Giày dép nam',
+        'mu-nam': 'Mũ nam',
+        'vi-da-nam': 'Ví da nam',
+        'that-lung-nam': 'Thắt lưng nam',
+        'so-mi-nu': 'Sơ mi nữ',
+        'ao-dai': 'Áo dài',
+        'ao-hai-day': 'Áo hai dây',
+        'ao-det-kim': 'Áo dệt kim',
+        'quan-dai-nu': 'Quần dài nữ',
+        'quan-lung-nu': 'Quần lửng nữ',
+        'quan-jean-nu': 'Quần jean nữ',
+        'dam-cong-so': 'Đầm công sở',
+        'dam-dao-pho': 'Đầm dạo phố',
+        'dam-da-hoi': 'Đầm dạ hội',
+        'vay-dam-hoa': 'Váy đầm hoa',
+        'chan-vay-dai': 'Chân váy dài',
+        'chan-vay-ngan': 'Chân váy ngắn',
+        'tui-xach': 'Túi xách',
+        'khan': 'Khăn',
+        'vong-co': 'Vòng cổ',
+        'nuoc-hoa': 'Nước hoa'
+    };
+
+    const colorLabels = {
+        'black': 'Đen',
+        'red': 'Đỏ',
+        'gold': 'Vàng',
+        'blue': 'Xanh dương',
+        'silver': 'Bạc',
+        'beige': 'Be',
+        'green': 'Xanh lá',
+        'white': 'Trắng',
+        'pink': 'Hồng'
+    };
+
     const handleAddToCart = (product) => {
-        console.log(product)
         dispatch(addToCart(product));
     };
 
-    if (isLoading) return <p>Loading product details...</p>;
-    if (error) return <p>Error loading product details.</p>;
+    if (isLoading) return <p>Đang tải chi tiết sản phẩm...</p>;
+    if (error) return <p>Lỗi khi tải chi tiết sản phẩm.</p>;
 
     return (
         <>
             <section className="section__container rounded bg-primary-light">
-                <h2 className="section__header">Single Product Page</h2>
+                <h2 className="section__header">Chi tiết sản phẩm</h2>
                 <div className="section__subheader space-x-2">
-                    <span className='hover:text-primary'><Link to="/">home</Link></span>
+                    <span className='hover:text-primary'><Link to="/">Trang chủ</Link></span>
                     <i className="ri-arrow-right-s-line"></i>
-                    <span className='hover:text-primary'><Link to="/shop">shop</Link></span>
+                    <span className='hover:text-primary'><Link to="/shop">Cửa hàng</Link></span>
                     <i className="ri-arrow-right-s-line"></i>
-                    <span className='hover:text-primary'>{singleProduct.name}</span>
+                    <span className='hover:text-primary text-gray-500'>{singleProduct.name}</span>
                 </div>
             </section>
 
@@ -54,16 +97,16 @@ const SingleProduct = () => {
                     <div className="w-full md:w-1/2">
                         <h3 className="text-2xl font-semibold mb-4">{singleProduct.name}</h3>
                         <p className="text-xl text-primary mb-4">
-                            ${singleProduct.price} {singleProduct.oldPrice && <s>${singleProduct.oldPrice}</s>}
+                            {new Intl.NumberFormat('vi-VN').format(singleProduct.price)} đ {singleProduct.oldPrice && <s className="text-gray-400 ml-2">{new Intl.NumberFormat('vi-VN').format(singleProduct.oldPrice)} đ</s>}
                         </p>
                         <p className="text-gray-700 mb-4">{singleProduct.description}</p>
 
                         {/* Additional Product Information */}
                         <div className="flex flex-col space-y-2">
-                            <p><strong>Category:</strong> {singleProduct.category}</p>
-                            <p><strong>Color:</strong> {singleProduct.color}</p>
+                            <p><strong>Danh mục:</strong> {categoryLabels[singleProduct.category] || singleProduct.category}</p>
+                            <p><strong>Màu sắc:</strong> {colorLabels[singleProduct.color] || singleProduct.color}</p>
                             <div className='flex gap-1 items-center'>
-                                <strong>Rating:</strong>
+                                <strong>Đánh giá:</strong>
                                 <RatingStars rating={singleProduct.rating} />
                             </div>
                         </div>
@@ -75,8 +118,8 @@ const SingleProduct = () => {
                                 e.stopPropagation();
                                 handleAddToCart(singleProduct)
                             }}
-                            className="mt-6 px-6 py-3 bg-primary text-white rounded-md">
-                            Add to Cart
+                            className="mt-6 px-6 py-3 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors">
+                            Thêm vào giỏ hàng
                         </button>
                     </div>
                 </div>

@@ -19,25 +19,25 @@ const Search = () => {
     return (
         <>
             <section className="section__container bg-primary-light">
-                <h2 className="section__header">Search Products</h2>
+                <h2 className="section__header">Tìm kiếm sản phẩm</h2>
                 <p className="section__subheader">
-                    Browse a diverse range of categories, from chic dresses to versatile accessories. Elevate your style today!
+                    Khám phá đa dạng các danh mục, từ những bộ váy sang trọng đến các phụ kiện linh hoạt. Nâng tầm phong cách của bạn ngay hôm nay!
                 </p>
             </section>
             <section className="section__container">
                 <div className="w-full mb-12 flex flex-col md:flex-row items-center justify-center gap-4">
                     <input
                         type="text"
-                        placeholder="Search for products..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
+                        placeholder="Tìm kiếm sản phẩm..."
                         className="search-bar w-full max-w-4xl p-2 border rounded"
                     />
                     <button
                         onClick={handleSearch}
                         className="search-button w-full md:w-auto py-2 px-8 bg-primary text-white rounded"
                     >
-                        Search
+                        Tìm kiếm
                     </button>
                 </div>
                 <ProductCards products={filteredProducts}/>

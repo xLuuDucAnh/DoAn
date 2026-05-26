@@ -11,13 +11,13 @@ const UserPayments = () => {
   if (isLoading) return <div>Loading...</div>;
 
   // Calculate total payment
-  const totalPayment = orders?.reduce((acc, order) => acc + order.amount, 0).toFixed(2);
+  const totalPayment = orders?.reduce((acc, order) => acc + order.amount, 0);
 
   return (
     <div className="py-6 px-4">
       <h3 className="text-xl font-semibold text-blueGray-700 mb-4">Total Payments</h3>
       <div className="bg-white p-8 shadow-lg rounded">
-        <p className="text-lg font-medium text-gray-800 mb-5">Total Spent: ${totalPayment ? totalPayment : 0}</p>
+        <p className="text-lg font-medium text-gray-800 mb-5">Tổng đã chi: {totalPayment ? totalPayment.toLocaleString('vi-VN') : 0} đ</p>
         <ul>
         
           {
@@ -25,8 +25,8 @@ const UserPayments = () => {
               <li key={index}>
                 <h5 className="font-medium text-gray-800 mb-2">Order #{index + 1}</h5>
                 <div key={index} className="flex items-center space-x-2">
-                  <span className="text-gray-600">Order #{item.id}</span>
-                  <span className="text-gray-600">${item.amount.toFixed(2)}</span>
+                  <span className="text-gray-600">Đơn hàng #{item.id}</span>
+                  <span className="text-gray-600">{item.amount.toLocaleString('vi-VN')} đ</span>
                 </div>
                 <div className="flex md:flex-row items-center space-x-2">
                   <span className="text-gray-600">Date: {new Date(item.createdAt).toLocaleString()}</span>
