@@ -41,17 +41,17 @@ const Navbar = () => {
 
 
   const adminDropdownMenus = [
-    { label: "Dashboard", path: "/dashboard/admin" },
-    { label: "Manage Items", path: "/dashboard/manage-products" },
-    {label: "All Orders", path: "/dashboard/manage-orders" },
-    { label: "Add New Post", path: "/dashboard/add-new-post" }
+    { label: "Bảng điều khiển", path: "/dashboard/admin" },
+    { label: "Quản lý sản phẩm", path: "/dashboard/manage-products" },
+    { label: "Tất cả đơn hàng", path: "/dashboard/manage-orders" },
+    { label: "Thêm bài viết mới", path: "/dashboard/add-new-post" }
   ];
 
   const userDropdownMenus = [
-    { label: "Dashboard", path: "/dashboard" },
-    { label: "Profile", path: "/dashboard/profile" }, 
-    { label: "Payments", path: "/dashboard/payments" },
-    { label: "Orders", path: "/dashboard/orders" },
+    { label: "Bảng điều khiển", path: "/dashboard" },
+    { label: "Hồ sơ", path: "/dashboard/profile" }, 
+    { label: "Thanh toán", path: "/dashboard/payments" },
+    { label: "Đơn hàng", path: "/dashboard/orders" },
   ];
 
   const dropdownMenus = user?.role === 'admin'
@@ -62,10 +62,10 @@ const Navbar = () => {
     <header className="fixed-nav-bar w-nav">
       <nav className="max-w-screen-2xl mx-auto px-4 flex justify-between items-center">
         <ul className="nav__links">
-          <li className="link"><Link to="/">Home</Link></li>
-          <li className="link"><Link to="/shop">Shop</Link></li>
-          <li className="link"><Link to="/">Pages</Link></li>
-          <li className="link"><Link to="/contact">Contact</Link></li>
+          <li className="link"><Link to="/">Trang chủ</Link></li>
+          <li className="link"><Link to="/shop">Cửa hàng</Link></li>
+          <li className="link"><Link to="/">Trang</Link></li>
+          <li className="link"><Link to="/contact">Liên hệ</Link></li>
         </ul>
         <div className="nav__logo">
           <Link to="/">Lebaba<span>.</span></Link>
@@ -103,7 +103,7 @@ const Navbar = () => {
 
                       ))}
                       <li>
-                        <Link onClick={handleLogout} className='dropdown-items'>Logout</Link>
+                        <Link onClick={handleLogout} className='dropdown-items'>Đăng xuất</Link>
                       </li>
                     </ul>
                   </div>

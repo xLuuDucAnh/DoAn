@@ -1,85 +1,83 @@
 const express = require("express");
 const Order = require("./orders.model");
 const router = express.Router();
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const crypto = require("crypto");
+const https = require("https");
 
-// Create Checkout Session
-router.post("/create-checkout-session", async (req, res) => {
-  const { products } = req.body;
+// Create MoMo Payment
+router.post("/create-momo-payment", async (req, res) => {
+  const { amount, orderId, orderInfo } = req.body;
+  const partnerCode = process.env.MOMO_PARTNER_CODE;
+  const accessKey = process.env.MOMO_ACCESS_KEY;
+  const secretKey = process.env.MOMO_SECRET_KEY;
+  const redirectUrl = "http://localhost:5173/success";
+  const ipnUrl = "http://localhost:5173/success";
+  const requestType = "captureWallet";
+  const requestId = orderId;
+  const extraData = "";
 
-  try {
-    const lineItems = products.map((product) => ({
-      price_data: {
-        currency: "usd",
-        product_data: {
-          name: product.name,
-          images: [product.image],
-        },
-        unit_amount: Math.round(product.price * 100),
-      },
-      quantity: product.quantity,
-    }));
+  // Signature for AIO v2 Create endpoint (Alphabetical order)
+  const rawSignature = `accessKey=${accessKey}&amount=${amount}&extraData=${extraData}&ipnUrl=${ipnUrl}&orderId=${orderId}&orderInfo=${orderInfo}&partnerCode=${partnerCode}&redirectUrl=${redirectUrl}&requestId=${requestId}&requestType=${requestType}`;
 
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      line_items: lineItems,
-      mode: "payment",
-      success_url:
-        "http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}",
-      cancel_url: "http://localhost:5173/cancel",
+  const signature = crypto
+    .createHmac("sha256", secretKey)
+    .update(rawSignature)
+    .digest("hex");
+
+  console.log("Raw Signature String (AIO v2):", rawSignature);
+  console.log("Generated Signature (AIO v2):", signature);
+
+  const requestBody = JSON.stringify({
+    partnerCode,
+    accessKey,
+    requestId,
+    amount,
+    orderId,
+    orderInfo,
+    redirectUrl,
+    ipnUrl,
+    extraData,
+    requestType,
+    signature,
+    lang: "vi",
+  });
+
+  console.log("MoMo AIO v2 Body:", requestBody);
+
+  const options = {
+    hostname: "test-payment.momo.vn",
+    port: 443,
+    path: "/v2/gateway/api/create",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Content-Length": Buffer.byteLength(requestBody),
+    },
+  };
+
+  const momoReq = https.request(options, (momoRes) => {
+    let data = "";
+    momoRes.on("data", (chunk) => {
+      data += chunk;
     });
-
-    res.json({ id: session.id });
-  } catch (error) {
-    console.error("Error creating checkout session:", error);
-    res.status(500).json({ error: "Failed to create checkout session" });
-  }
-});
-
-// Confirm Payment
-router.post("/confirm-payment", async (req, res) => {
-  const { session_id } = req.body;
-  // console.log(session_id);
-
-  try {
-    const session = await stripe.checkout.sessions.retrieve(session_id, {
-      expand: ["line_items", "payment_intent"],
+    momoRes.on("end", () => {
+      try {
+        const responseData = JSON.parse(data);
+        console.log("MoMo Response:", responseData);
+        res.status(200).json(responseData);
+      } catch (e) {
+        res.status(500).json({ error: "Invalid response from MoMo", raw: data });
+      }
     });
+  });
 
-    const paymentIntentId = session.payment_intent.id;
+  momoReq.on("error", (error) => {
+    console.error("MoMo Error:", error);
+    res.status(500).json({ error: "Failed to create MoMo payment" });
+  });
 
-    let order = await Order.findOne({ orderId: paymentIntentId });
-
-    if (!order) {
-      const lineItems = session.line_items.data.map((item) => ({
-        productId: item.price.product,
-        quantity: item.quantity,
-      }));
-
-      const amount = session.amount_total / 100;
-
-      order = new Order({
-        orderId: paymentIntentId,
-        products: lineItems,
-        amount: amount,
-        email: session.customer_details.email,
-        status:
-          session.payment_intent.status === "succeeded" ? "pending" : "failed",
-      });
-    } else {
-      order.status =
-        session.payment_intent.status === "succeeded" ? "pending" : "failed";
-    }
-
-    // Save the order to MongoDB
-    await order.save();
-    //   console.log('Order saved to MongoDB', order);
-
-    res.json({ order });
-  } catch (error) {
-    console.error("Error confirming payment:", error);
-    res.status(500).json({ error: "Failed to confirm payment" });
-  }
+  momoReq.write(requestBody);
+  momoReq.end();
 });
 
 router.get("/:email", async (req, res) => {
@@ -94,8 +92,8 @@ router.get("/:email", async (req, res) => {
     const orders = await Order.find({ email: email }).sort({ createdAt: -1 });
     if (orders.length === 0 || !orders) {
       return res
-        .status(404)
-        .json({ order: 0, message: "No orders found for this email" });
+        .status(200) // Changed from 404 to 200 as it's a valid data request resulting in empty array
+        .json([]);
     }
     res.json(orders);
   } catch (error) {
@@ -125,7 +123,7 @@ router.get('/', async (req, res) => {
     const orders = await Order.find().sort({createdAt: -1});
     if (orders.length === 0) {
       console.log('No orders found');
-      return res.status(200).json({ message: "No orders found", orders: [] });
+      return res.status(200).json([]);
     }
 
     res.status(200).json(orders);

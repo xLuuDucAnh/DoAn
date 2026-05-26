@@ -48,7 +48,7 @@ const ManageOrders = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {orders.map((order, index) => (
+                    {(Array.isArray(orders) ? orders : (orders?.orders || [])).map((order, index) => (
                         <tr key={index}>
                             <td className="py-3 px-4 border-b">{order.orderId}</td>
                             <td className="py-3 px-4 border-b">{order?.email}</td>

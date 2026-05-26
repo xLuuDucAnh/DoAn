@@ -28,11 +28,11 @@ const Login = () => {
       // console.log(response)
       const { token, user } = response;
       dispatch(setUser({ user }));
-      alert('Login successful');
+      alert('Đăng nhập thành công');
       navigate('/');
 
     } catch (err) {
-      setMessage("Please provide a valid email and password!");
+      setMessage("Vui lòng cung cấp email và mật khẩu hợp lệ!");
     }
   };
 
@@ -41,26 +41,26 @@ const Login = () => {
   return (
     <section className='h-screen flex items-center justify-center'>
       <div className='max-w-sm border shadow bg-white mx-auto p-8'>
-        <h2 className='text-2xl font-semibold pt-5'>Please login</h2>
+        <h2 className='text-2xl font-semibold pt-5'>Vui lòng đăng nhập</h2>
         <form onSubmit={handleLogin} className='space-y-5 max-w-sm mx-auto pt-8'>
           <input type="text" value={email}
             className='w-full bg-gray-100 focus:outline-none px-5 py-3'
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email" required />
+            placeholder="Địa chỉ Email" required />
 
           <input type="password" value={password}
             className='w-full bg-gray-100 focus:outline-none px-5 py-3'
-            onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
+            onChange={(e) => setPassword(e.target.value)} placeholder="Mật khẩu" required />
           {
             message && <p className="text-red-500">{message}</p>  // Display error message if any
           }
           <button type="submit" disabled={loginLoading}
             className='w-full mt-5 bg-primary hover:bg-indigo-500 text-white font-medium py-3 rounded-md'
-          >Login</button>
+          >Đăng nhập</button>
         </form>
 
-        <p className='my-5 italic text-sm text-center'>Don't have an account?
-          <Link to="/register" className='text-red-700  px-1 underline'> Register </Link> here.
+        <p className='my-5 italic text-sm text-center'>Chưa có tài khoản?
+          <Link to="/register" className='text-red-700  px-1 underline'> Đăng ký </Link> tại đây.
         </p>
       </div>
 

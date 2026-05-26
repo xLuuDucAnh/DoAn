@@ -6,16 +6,21 @@ const router = express.Router();
 // post a product
 router.post("/create-product", async (req, res) => {
   try {
-    const { name } = req.body;
+    if (Array.isArray(req.body)) {
+      // Bulk creation
+      const savedProducts = await Products.insertMany(req.body);
+      return res.status(201).json(savedProducts);
+    }
 
-    // Create a new product instance
+    // Single product creation (existing logic)
     const newProduct = new Products({
       ...req.body,
     });
 
     const savedProduct = await newProduct.save();
 
-    // Calculate the average rating
+    // Calculate the average rating (only for single product if needed, 
+    // though usually new products have 0 reviews)
     const reviews = await Reviews.find({ productId: savedProduct._id });
     if (reviews.length > 0) {
       const totalRating = reviews.reduce(
@@ -29,8 +34,11 @@ router.post("/create-product", async (req, res) => {
 
     res.status(201).json(savedProduct);
   } catch (error) {
-    console.error("Error creating product:", error);
-    res.status(500).json({ message: "Failed to create product" });
+    console.error("Error creating product(s):", error);
+    res.status(500).json({ 
+      message: "Failed to create product", 
+      error: error.message // Return specific error message for debugging
+    });
   }
 });
 

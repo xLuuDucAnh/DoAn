@@ -8,22 +8,22 @@ const cards = [
   {
     id: 1,
     image: card1,
-    trend: '2023 Trend',
-    title: 'Womens Shirt',
+    trend: 'Xu hướng 2023',
+    title: 'Áo sơ mi nữ',
     link: '#',
   },
   {
     id: 2,
     image: card2,
-    trend: '2023 Trend',
-    title: 'Womens Dresses',
+    trend: 'Xu hướng 2023',
+    title: 'Váy nữ',
     link: '#',
   },
   {
     id: 3,
     image: card3,
-    trend: '2023 Trend',
-    title: 'Womens Casuals',
+    trend: 'Xu hướng 2023',
+    title: 'Đồ mặc hàng ngày',
     link: '#',
   },
 ];
@@ -37,7 +37,7 @@ const HeroSection = () => {
           <div className="hero__content">
             <p>{card.trend}</p>
             <h4>{card.title}</h4>
-            <a href={card.link}>Discover More +</a>
+            <a href={card.link}>Khám phá thêm +</a>
           </div>
         </div>
       ))}

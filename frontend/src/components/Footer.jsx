@@ -11,10 +11,10 @@ const Footer = () => {
         <>
             <footer className="section__container footer__container">
                 <div className="footer__col">
-                    <h4>CONTACT INFO</h4>
+                    <h4>THÔNG TIN LIÊN HỆ</h4>
                     <p>
                         <span><i className="ri-map-pin-2-fill"></i></span>
-                        123, London Bridge Street, London
+                        123, Đường Cầu Luân Đôn, Luân Đôn
                     </p>
                     <p>
                         <span><i className="ri-mail-fill"></i></span>
@@ -26,20 +26,20 @@ const Footer = () => {
                     </p>
                 </div>
                 <div className="footer__col">
-                    <h4>COMPANY</h4>
-                    <a href="#">Home</a>
-                    <a href="#">About Us</a>
-                    <a href="#">Work With Us</a>
-                    <a href="#">Our Blog</a>
-                    <a href="#">Terms & Conditions</a>
+                    <h4>CÔNG TY</h4>
+                    <a href="/">Trang chủ</a>
+                    <a href="#">Về chúng tôi</a>
+                    <a href="#">Làm việc với chúng tôi</a>
+                    <a href="#">Blog của chúng tôi</a>
+                    <a href="#">Điều khoản & Điều kiện</a>
                 </div>
                 <div className="footer__col">
-                    <h4>USEFUL LINK</h4>
-                    <a href="#">Help</a>
-                    <a href="#">Track My Order</a>
-                    <a href="#">Men</a>
-                    <a href="#">Women</a>
-                    <a href="#">Dresses</a>
+                    <h4>LIÊN KẾT HỮU ÍCH</h4>
+                    <a href="#">Hỗ trợ</a>
+                    <a href="#">Theo dõi đơn hàng</a>
+                    <a href="#">Nam</a>
+                    <a href="#">Nữ</a>
+                    <a href="#">Váy</a>
                 </div>
                 <div className="footer__col">
                     <h4>INSTAGRAM</h4>
@@ -54,7 +54,7 @@ const Footer = () => {
                 </div>
             </footer>
             <div className="footer__bar">
-                Copyright © 2025 Web Design Mastery. All rights reserved.
+                Bản quyền © 2025 Web Design Mastery. Mọi quyền được bảo lưu.
             </div>
         </>
     )

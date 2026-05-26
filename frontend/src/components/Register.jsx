@@ -24,17 +24,17 @@ const Register = () => {
     console.log(data);
     try {
       await registerUser(data).unwrap();
-      alert("Registration successful");
+      alert("Đăng ký thành công");
       navigate('/login');
     } catch (err) {
-      alert("Registration failed");
+      alert("Đăng ký thất bại");
     }
   };
 
   return (
     <section className='h-screen flex items-center justify-center'>
       <div className="max-w-sm mx-auto bg-white border shadow p-8">
-        <h2 className="text-2xl font-semibold pt-5">Please Register</h2>
+        <h2 className="text-2xl font-semibold pt-5">Vui lòng đăng ký</h2>
         <form
           onSubmit={handleRegister}
           className="space-y-5 max-w-sm mx-auto pt-8"
@@ -44,7 +44,7 @@ const Register = () => {
             value={username}
             className="w-full bg-gray-100 focus:outline-none px-5 py-3"
             onChange={(e) => setUserName(e.target.value)}
-            placeholder="Username"
+            placeholder="Tên đăng nhập"
             required
           />
 
@@ -53,7 +53,7 @@ const Register = () => {
             value={email}
             className="w-full bg-gray-100 focus:outline-none px-5 py-3"
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
+            placeholder="Địa chỉ Email"
             required
           />
 
@@ -62,7 +62,7 @@ const Register = () => {
             value={password}
             className="w-full bg-gray-100 focus:outline-none px-5 py-3"
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
+            placeholder="Mật khẩu"
             required
           />
           {
@@ -73,16 +73,15 @@ const Register = () => {
             disabled={isLoading}
             className="w-full mt-5 bg-primary hover:bg-indigo-500 text-white font-medium py-3 rounded-md"
           >
-            Register
+            Đăng ký
           </button>
         </form>
 
         <p className="my-5 italic text-sm text-center">
-          Already have an account? Please 
+          Đã có tài khoản? Vui lòng 
           <Link to="/login" className="text-red-700  px-1 underline">
-            Login
+             Đăng nhập
           </Link>
-
         </p>
       </div>
     </section>

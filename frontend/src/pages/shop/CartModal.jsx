@@ -33,7 +33,7 @@ const CartModal = ({ isOpen, onClose, products }) => {
         <div
           className="p-4 mt-4">
           <div className="flex justify-between items-center mb-4">
-            <h4 className="text-xl font-semibold">Your Cart</h4>
+            <h4 className="text-xl font-semibold">Giỏ hàng của bạn</h4>
             <button
               onClick={() => onClose()}
               className="text-gray-600 hover:text-gray-900">
@@ -42,7 +42,7 @@ const CartModal = ({ isOpen, onClose, products }) => {
           </div>
           <div className="cart-items">
             {products.length === 0 ? (
-              <p>Your cart is empty.</p>
+              <p>Giỏ hàng của bạn đang trống.</p>
             ) : (
               products.map((item, index) => (
                 <div key={index} className="flex flex-col md:flex-row md:items-center md:justify-between shadow-md md:p-5 p-2 mb-4">
@@ -74,7 +74,7 @@ const CartModal = ({ isOpen, onClose, products }) => {
                     <div className='ml-5'>
                       <button
                         onClick={(e) => handleRemove(e, item._id)}
-                        className="text-red-500 hover:text-red-700 mr-4">Remove</button>
+                        className="text-red-500 hover:text-red-700 mr-4">Xóa</button>
                     </div>
                   </div>
 
