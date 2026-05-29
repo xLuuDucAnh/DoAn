@@ -31,35 +31,19 @@ const SingleProduct = () => {
         'mu-nam': 'Mũ nam',
         'vi-da-nam': 'Ví da nam',
         'that-lung-nam': 'Thắt lưng nam',
-        'so-mi-nu': 'Sơ mi nữ',
-        'ao-dai': 'Áo dài',
-        'ao-hai-day': 'Áo hai dây',
-        'ao-det-kim': 'Áo dệt kim',
-        'quan-dai-nu': 'Quần dài nữ',
-        'quan-lung-nu': 'Quần lửng nữ',
-        'quan-jean-nu': 'Quần jean nữ',
-        'dam-cong-so': 'Đầm công sở',
-        'dam-dao-pho': 'Đầm dạo phố',
-        'dam-da-hoi': 'Đầm dạ hội',
-        'vay-dam-hoa': 'Váy đầm hoa',
-        'chan-vay-dai': 'Chân váy dài',
-        'chan-vay-ngan': 'Chân váy ngắn',
-        'tui-xach': 'Túi xách',
-        'khan': 'Khăn',
         'vong-co': 'Vòng cổ',
         'nuoc-hoa': 'Nước hoa'
     };
 
     const colorLabels = {
         'black': 'Đen',
-        'red': 'Đỏ',
-        'gold': 'Vàng',
-        'blue': 'Xanh dương',
-        'silver': 'Bạc',
-        'beige': 'Be',
-        'green': 'Xanh lá',
         'white': 'Trắng',
-        'pink': 'Hồng'
+        'gray': 'Xám',
+        'navy': 'Xanh than',
+        'brown': 'Nâu',
+        'beige': 'Be',
+        'olive': 'Xanh rêu',
+        'burgundy': 'Đỏ đô'
     };
 
     const handleAddToCart = (product) => {
@@ -85,16 +69,16 @@ const SingleProduct = () => {
             <section className="section__container mt-8">
                 <div className="flex flex-col items-center md:flex-row gap-8">
                     {/* Product Image */}
-                    <div className="w-full md:w-1/2">
+                    <div className="w-full md:w-5/12">
                         <img
                             src={singleProduct.image}
                             alt={singleProduct.name}
-                            className="rounded-md w-full h-auto"
+                            className="rounded-md w-full h-auto shadow-md"
                         />
                     </div>
 
                     {/* Product Details */}
-                    <div className="w-full md:w-1/2">
+                    <div className="w-full md:w-7/12">
                         <h3 className="text-2xl font-semibold mb-4">{singleProduct.name}</h3>
                         <p className="text-xl text-primary mb-4">
                             {new Intl.NumberFormat('vi-VN').format(singleProduct.price)} đ {singleProduct.oldPrice && <s className="text-gray-400 ml-2">{new Intl.NumberFormat('vi-VN').format(singleProduct.oldPrice)} đ</s>}
@@ -127,7 +111,7 @@ const SingleProduct = () => {
 
             {/* Display Reviews */}
             <section className="section__container mt-8">
-                <ReviewsCard productReviews={productReviews}/>
+                <ReviewsCard productReviews={productReviews} />
             </section>
         </>
     );

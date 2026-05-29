@@ -14,7 +14,7 @@ const TrendingProducts = () => {
     <section className="section__container product__container">
       <h2 className="section__header">Sản phẩm thịnh hành</h2>
       <p className="section__subheader mb-12">
-        Khám phá những lựa chọn hot nhất: Nâng tầm phong cách của bạn với bộ sưu tập thời trang nữ thịnh hành của chúng tôi.
+        Khám phá những lựa chọn hot nhất: Nâng tầm phong cách của bạn với bộ sưu tập thời trang nam thịnh hành của chúng tôi.
       </p>
 
       {/* products card */}

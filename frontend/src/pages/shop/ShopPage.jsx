@@ -30,54 +30,12 @@ const categoryGroups = [
             { label: 'Ví da', value: 'vi-da-nam' },
             { label: 'Thắt lưng', value: 'that-lung-nam' }
         ]
-    },
-    {
-        name: 'Áo nữ',
-        subcategories: [
-            { label: 'Sơ mi nữ', value: 'so-mi-nu' },
-            { label: 'Áo dài', value: 'ao-dai' },
-            { label: 'Áo hai dây', value: 'ao-hai-day' },
-            { label: 'Áo dệt kim', value: 'ao-det-kim' }
-        ]
-    },
-    {
-        name: 'Quần nữ',
-        subcategories: [
-            { label: 'Quần dài nữ', value: 'quan-dai-nu' },
-            { label: 'Quần lửng nữ', value: 'quan-lung-nu' },
-            { label: 'Quần jean nữ', value: 'quan-jean-nu' }
-        ]
-    },
-    {
-        name: 'Đầm',
-        subcategories: [
-            { label: 'Đầm công sở', value: 'dam-cong-so' },
-            { label: 'Đầm dạo phố', value: 'dam-dao-pho' },
-            { label: 'Đầm dạ hội', value: 'dam-da-hoi' },
-            { label: 'Váy đầm hoa', value: 'vay-dam-hoa' }
-        ]
-    },
-    {
-        name: 'Chân váy',
-        subcategories: [
-            { label: 'Chân váy dài', value: 'chan-vay-dai' },
-            { label: 'Chân váy ngắn', value: 'chan-vay-ngan' }
-        ]
-    },
-    {
-        name: 'Phụ kiện nữ',
-        subcategories: [
-            { label: 'Túi xách', value: 'tui-xach' },
-            { label: 'Khăn', value: 'khan' },
-            { label: 'Vòng cổ', value: 'vong-co' },
-            { label: 'Nước hoa', value: 'nuoc-hoa' }
-        ]
     }
 ];
 
 const filters = {
     categories: ['all', ...categoryGroups.flatMap(group => group.subcategories.map(sub => sub.value))],
-    colors: ['all', 'black', 'red', 'gold', 'blue', 'silver', 'beige', 'green'],
+    colors: ['all', 'black', 'white', 'gray', 'navy', 'brown', 'beige', 'olive', 'burgundy'],
     priceRanges: [
         { label: 'Dưới 1.000.000 đ', min: 0, max: 1000000 },
         { label: '1.000.000 đ - 2.000.000 đ', min: 1000000, max: 2000000 },
@@ -135,7 +93,7 @@ const ShopPage = () => {
             <section className="section__container rounded bg-primary-light">
                 <h2 className="section__header">Trang Cửa Hàng</h2>
                 <p className="section__subheader">
-                    Khám phá những lựa chọn hot nhất: Nâng tầm phong cách của bạn với bộ sưu tập thời trang nữ thịnh hành của chúng tôi.
+                    Khám phá những phong cách thời thượng: Nâng tầm diện mạo của bạn với bộ sưu tập thời trang nam cao cấp của chúng tôi.
                 </p>
             </section>
             <section className='section__container'>

@@ -8,10 +8,10 @@ import category4 from "../../assets/category-4.jpg"
 
 const Categories = () => {
     const categories = [
-        { name: 'Áo Nam', path: 'ao-nam-phong', image: category1 },
-        { name: 'Áo Nữ', path: 'so-mi-nu', image: category2 },
-        { name: 'Đầm Thời Trang', path: 'dam-dao-pho', image: category3},
-        { name: 'Phụ Kiện', path: 'tui-xach', image: category4 },
+        { name: 'Áo Nam', path: 'ao-nam-phong', image: 'https://zeanus.vn/upload/product/zn-0127/ao-thun-nam-polo-trang-tre-trung-axh-171.jpg' },
+        { name: 'Quần Jeans', path: 'quan-nam-jeans', image: 'https://heis.vn/storage/uploads/2019/10/11/5da0515addc08.jpg' },
+        { name: 'Phụ Kiện Nam', path: 'tui-xach', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1999&auto=format&fit=crop' },
+        { name: 'Giày Nam', path: 'giay-dep-nam', image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop' },
     ];
 
     return (

@@ -3,7 +3,7 @@
 :root {
   --primary-color: #ed3849;
   --primary-color-dark: #d23141;
-  --primary-color-light: #f4e5ec;
+  --primary-color-light: #e2e8f0;
   --text-dark: #0f172a;
   --text-light: #64748b;
   --extra-light: #f8fafc;
@@ -167,7 +167,7 @@ nav {
 .header__image img {
   position: absolute;
   left: 50%;
-  bottom: -5rem;
+  bottom: -8rem;
   transform: translateX(-50%);
   max-width: 500px;
 }
@@ -186,11 +186,13 @@ nav {
 }
 
 .categories__card img {
-  max-width: 100px;
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
   margin: auto;
   margin-bottom: 1rem;
   border: 5px solid var(--white);
-  border-radius: 100%;
+  border-radius: 50%;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
@@ -209,7 +211,16 @@ nav {
 
 .hero__card {
   position: relative;
+  max-height: 320px;
+  overflow: hidden;
   box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+.hero__card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
 }
 
 .hero__content {
@@ -300,7 +311,7 @@ nav {
 .deals__image img {
   position: absolute;
   left: 50%;
-  bottom: -5rem;
+  bottom: -6rem;
   transform: translateX(-50%);
   max-width: 550px;
 }
@@ -572,7 +583,7 @@ nav {
   }
 }
 
-.nav__icons span a.dropdown-items{
+.nav__icons span a.dropdown-items {
   font-size: 16px;
 }
 
@@ -586,6 +597,6 @@ input[type="number"]::-webkit-outer-spin-button {
   @apply mt-1 block py-2.5 px-4 w-full rounded-md bg-gray-100 border-gray-300 shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm
 }
 
-.add-product-btn{
+.add-product-btn {
   @apply mt-5 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
 }

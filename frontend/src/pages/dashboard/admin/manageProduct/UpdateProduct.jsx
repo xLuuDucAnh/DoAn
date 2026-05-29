@@ -20,34 +20,20 @@ const categories = [
     { label: 'Mũ nam', value: 'mu-nam' },
     { label: 'Ví da nam', value: 'vi-da-nam' },
     { label: 'Thắt lưng nam', value: 'that-lung-nam' },
-    { label: 'Sơ mi nữ', value: 'so-mi-nu' },
-    { label: 'Áo dài', value: 'ao-dai' },
-    { label: 'Áo hai dây', value: 'ao-hai-day' },
-    { label: 'Áo dệt kim', value: 'ao-det-kim' },
-    { label: 'Quần dài nữ', value: 'quan-dai-nu' },
-    { label: 'Quần lửng nữ', value: 'quan-lung-nu' },
-    { label: 'Quần jean nữ', value: 'quan-jean-nu' },
-    { label: 'Đầm công sở', value: 'dam-cong-so' },
-    { label: 'Đầm dạo phố', value: 'dam-dao-pho' },
-    { label: 'Đầm dạ hội', value: 'dam-da-hoi' },
-    { label: 'Váy đầm hoa', value: 'vay-dam-hoa' },
-    { label: 'Chân váy dài', value: 'chan-vay-dai' },
-    { label: 'Chân váy ngắn', value: 'chan-vay-ngan' },
-    { label: 'Túi xách', value: 'tui-xach' },
-    { label: 'Khăn', value: 'khan' },
     { label: 'Vòng cổ', value: 'vong-co' },
     { label: 'Nước hoa', value: 'nuoc-hoa' }
 ];
 
 const colors = [
-    { label: 'Select Color', value: '' },
-    { label: 'Black', value: 'black' },
-    { label: 'Red', value: 'red' },
-    { label: 'Gold', value: 'gold' },
-    { label: 'Blue', value: 'blue' },
-    { label: 'Silver', value: 'silver' },
-    { label: 'Beige', value: 'beige' },
-    { label: 'Green', value: 'green' }
+    { label: 'Chọn màu sắc', value: '' },
+    { label: 'Đen', value: 'black' },
+    { label: 'Trắng', value: 'white' },
+    { label: 'Xám', value: 'gray' },
+    { label: 'Xanh than', value: 'navy' },
+    { label: 'Nâu', value: 'brown' },
+    { label: 'Be', value: 'beige' },
+    { label: 'Xanh rêu', value: 'olive' },
+    { label: 'Đỏ đô', value: 'burgundy' }
 ];
 
 const UpdateProduct = () => {
@@ -102,7 +88,7 @@ const UpdateProduct = () => {
         // If newImage is set, use it; otherwise, keep the old image URL
         const updatedProduct = {
             ...product,
-            image: newImage ? newImage : product.image, 
+            image: newImage ? newImage : product.image,
             author: user?._id
         };
 
@@ -166,8 +152,8 @@ const UpdateProduct = () => {
                 <UploadImage
                     name="image"
                     id="image"
-                    value={newImage || product.image} 
-                    setImage={handleImageChange} 
+                    value={newImage || product.image}
+                    setImage={handleImageChange}
                     placeholder='Upload a product image'
                 />
 

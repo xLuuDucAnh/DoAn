@@ -38,8 +38,8 @@ const Footer = () => {
                     <a href="#">Hỗ trợ</a>
                     <a href="#">Theo dõi đơn hàng</a>
                     <a href="#">Nam</a>
-                    <a href="#">Nữ</a>
-                    <a href="#">Váy</a>
+                    <a href="#">Giày Nam</a>
+                    <a href="#">Bộ sưu tập mới</a>
                 </div>
                 <div className="footer__col">
                     <h4>INSTAGRAM</h4>

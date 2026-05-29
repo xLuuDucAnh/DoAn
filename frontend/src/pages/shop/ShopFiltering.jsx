@@ -13,12 +13,13 @@ const ShopFiltering = ({filters, categoryGroups, filtersState, setFiltersState, 
     const colorTranslations = {
         'all': 'Tất cả',
         'black': 'Đen',
-        'red': 'Đỏ',
-        'gold': 'Vàng',
-        'blue': 'Xanh dương',
-        'silver': 'Bạc',
+        'white': 'Trắng',
+        'gray': 'Xám',
+        'navy': 'Xanh than',
+        'brown': 'Nâu',
         'beige': 'Be',
-        'green': 'Xanh lá'
+        'olive': 'Xanh rêu',
+        'burgundy': 'Đỏ đô'
     };
 
     return (
