@@ -62,6 +62,21 @@ export const productsApi = createApi({
       }),
       invalidatesTags: (result, error, id) => [{ type: "Products", id }],
     }),
+
+    searchProducts: builder.query({
+      query: (searchQuery) => `/?search=${encodeURIComponent(searchQuery)}&limit=50`,
+      providesTags: ["Products"],
+    }),
+
+    getProductRecommendations: builder.query({
+      query: (productId) => `/recommendations/product/${productId}`,
+      providesTags: (result, error, id) => [{ type: "Products", id }],
+    }),
+
+    getUserRecommendations: builder.query({
+      query: (email) => `/recommendations/user/${email}`,
+      providesTags: ["Products"],
+    }),
   }),
 });
 
@@ -72,6 +87,9 @@ export const {
   useUpdateProductMutation,
   useDeleteProductMutation,
   useFetchRelatedBlogsQuery,
+  useSearchProductsQuery,
+  useGetProductRecommendationsQuery,
+  useGetUserRecommendationsQuery,
 } = productsApi;
 
 export default productsApi;

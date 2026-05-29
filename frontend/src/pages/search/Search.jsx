@@ -1,19 +1,25 @@
 import React, { useState } from 'react';
-import productsData from '../../data/products.json';
+import { useSearchProductsQuery } from '../../redux/features/products/productsApi';
 import ProductCards from '../shop/ProductCards';
 
 const Search = () => {
     const [searchQuery, setSearchQuery] = useState('');
-    const [filteredProducts, setFilteredProducts] = useState(productsData);
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const { data, isLoading } = useSearchProductsQuery(searchTerm, {
+        skip: !searchTerm,
+    });
+
+    const products = data?.products || [];
 
     const handleSearch = () => {
-        const query = searchQuery.toLowerCase();
+        setSearchTerm(searchQuery.trim());
+    };
 
-        const filtered = productsData.filter(product =>
-            product.name.toLowerCase().includes(query) ||
-            product.description.toLowerCase().includes(query)
-        );
-        setFilteredProducts(filtered);
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            handleSearch();
+        }
     };
 
     return (
@@ -30,6 +36,7 @@ const Search = () => {
                         type="text"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
+                        onKeyDown={handleKeyDown}
                         placeholder="Tìm kiếm sản phẩm..."
                         className="search-bar w-full max-w-4xl p-2 border rounded"
                     />
@@ -40,11 +47,18 @@ const Search = () => {
                         Tìm kiếm
                     </button>
                 </div>
-                <ProductCards products={filteredProducts}/>
-                
+
+                {isLoading && <p className="text-center">Đang tìm kiếm...</p>}
+
+                {!isLoading && searchTerm && products.length === 0 && (
+                    <p className="text-center text-gray-500">
+                        Không tìm thấy sản phẩm nào cho "{searchTerm}"
+                    </p>
+                )}
+
+                {products.length > 0 && <ProductCards products={products} />}
             </section>
         </>
-
     );
 };
 

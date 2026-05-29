@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { useFetchProductByIdQuery } from '../../../redux/features/products/productsApi';
+import { useFetchProductByIdQuery, useGetProductRecommendationsQuery } from '../../../redux/features/products/productsApi';
 import RatingStars from '../../../components/RatingStars';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../../redux/features/cart/cartSlice';
 import ReviewsCard from '../reviews/ReviewsCard';
+import RecommendedProducts from '../../../components/RecommendedProducts';
 
 const SingleProduct = () => {
     const { id } = useParams();
@@ -113,7 +114,24 @@ const SingleProduct = () => {
             <section className="section__container mt-8">
                 <ReviewsCard productReviews={productReviews} />
             </section>
+
+            {/* Hybrid Recommendations */}
+            <ProductRecommendations productId={id} />
         </>
+    );
+};
+
+// Sub-component for Recommendations to manage its own query
+const ProductRecommendations = ({ productId }) => {
+    const { data, isLoading } = useGetProductRecommendationsQuery(productId);
+    const recommendations = data?.recommendations || [];
+
+    return (
+        <RecommendedProducts 
+            products={recommendations} 
+            loading={isLoading} 
+            title="Sản phẩm bạn có thể thích"
+        />
     );
 };
 
