@@ -1,7 +1,48 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const Products = require("./products.model");
 const Reviews = require("../reviews/reviews.model");
+const { products: sampleProducts } = require("../data/sampleData");
 const router = express.Router();
+
+const isDbConnected = () => mongoose.connection.readyState === 1;
+
+const publicSampleProducts = sampleProducts.map((product) => ({
+  ...product,
+  _id: product._id.toString(),
+  author: {
+    _id: product.author.toString(),
+    email: "admin@example.com",
+    username: "admin",
+  },
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+}));
+
+const normalizeSearchText = (value = "") => {
+  return value
+    .toString()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/g, "d")
+    .replace(/Đ/g, "D")
+    .toLowerCase();
+};
+
+const getFilteredSampleProducts = ({ category, color, minPrice, maxPrice, search }) => {
+  const normalizedSearch = normalizeSearchText(search).trim();
+
+  return publicSampleProducts.filter((product) => {
+    const searchableText = normalizeSearchText(`${product.name} ${product.description} ${product.category}`);
+    const matchesSearch = !normalizedSearch || searchableText.includes(normalizedSearch);
+    const matchesCategory = !category || category === "all" || product.category === category;
+    const matchesColor = !color || color === "all" || product.color === color;
+    const matchesMin = !minPrice || product.price >= Number(minPrice);
+    const matchesMax = !maxPrice || product.price <= Number(maxPrice);
+
+    return matchesSearch && matchesCategory && matchesColor && matchesMin && matchesMax;
+  });
+};
 
 // post a product
 router.post("/create-product", async (req, res) => {
@@ -46,6 +87,18 @@ router.post("/create-product", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const { category, color, minPrice, maxPrice, page = 1, limit = 10, search } = req.query;
+
+    if (!isDbConnected()) {
+      const filteredProducts = getFilteredSampleProducts({ category, color, minPrice, maxPrice, search });
+      const pageNumber = parseInt(page);
+      const limitNumber = parseInt(limit);
+      const skip = (pageNumber - 1) * limitNumber;
+      const products = filteredProducts.slice(skip, skip + limitNumber);
+      const totalProducts = filteredProducts.length;
+      const totalPages = Math.ceil(totalProducts / limitNumber);
+
+      return res.status(200).send({ products, totalPages, totalProducts });
+    }
 
     const filter = {};
 
@@ -95,6 +148,17 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const productId = req.params.id;
+
+    if (!isDbConnected()) {
+      const product = publicSampleProducts.find((item) => item._id === productId);
+
+      if (!product) {
+        return res.status(404).send({ message: "Product not found" });
+      }
+
+      return res.status(200).send({ product, reviews: [] });
+    }
+
     // console.log(postId)
 
     const product = await Products.findById(productId).populate(
