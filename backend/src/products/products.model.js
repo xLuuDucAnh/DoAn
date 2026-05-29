@@ -9,6 +9,7 @@ const ProductSchema = new mongoose.Schema(
     oldPrice: { type: Number },
     image: { type: String, required: true },
     color: { type: String },
+    stock: { type: Number, default: 0 },
     rating: { type: Number, default: 0 },
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
   },

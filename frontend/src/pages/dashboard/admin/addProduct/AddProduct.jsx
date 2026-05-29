@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useAddProductMutation } from '../../../../redux/features/products/productsApi';
 import TextInput from './TextInput';
 import SelectInput from './SelectInput';
@@ -27,6 +27,7 @@ const categories = [
 const colors = [
     { label: 'Chọn màu sắc', value: '' },
     { label: 'Đen', value: 'black' },
+    { label: 'Vàng', value: 'yellow' },
     { label: 'Trắng', value: 'white' },
     { label: 'Xám', value: 'gray' },
     { label: 'Xanh than', value: 'navy' },
@@ -44,13 +45,14 @@ const AddProduct = () => {
         category: '',
         color: '',
         price: '',
-        description: ''
+        description: '',
+        stock: 0
     });
     const [image, setImage] = useState('');
 
     const [addProduct, { isLoading, error }] = useAddProductMutation();
     const navigate = useNavigate()
-  
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -63,15 +65,27 @@ const AddProduct = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
-        if (!product.name || !product.category || !product.price  || !product.color) {
-            alert('Please fill in all fields.');
+
+        if (!product.name) {
+            alert('Vui lòng nhập tên sản phẩm.');
+            return;
+        }
+        if (!product.category) {
+            alert('Vui lòng chọn danh mục sản phẩm.');
+            return;
+        }
+        if (product.price === '' || product.price === null || undefined) {
+            alert('Vui lòng nhập giá sản phẩm.');
+            return;
+        }
+        if (!image) {
+            alert('Vui lòng tải lên ảnh sản phẩm.');
             return;
         }
         try {
             await addProduct({ ...product, image, author: user?._id }).unwrap();
             alert('Product added successfully!');
-            setProduct({ name: '', category: '', color: '', price: '', description: '' });
+            setProduct({ name: '', category: '', color: '', price: '', description: '', stock: 0 });
             setImage('');
             navigate("/shop")
         } catch (err) {
@@ -113,21 +127,44 @@ const AddProduct = () => {
                     value={product.price}
                     onChange={handleChange}
                 />
-                {/* <TextInput
-                    label="Image URL"
-                    name="image"
-                    type='text'
-                    value={product.image}
+                <TextInput
+                    label="Số lượng tồn kho"
+                    name="stock"
+                    type="number"
+                    placeholder="100"
+                    value={product.stock}
                     onChange={handleChange}
-                     placeholder="Ex: https://unsplash.com/photos/a-group-of-women-in-brightly-colored-outfits.png"
-                /> */}
-                <UploadImage
-                name="image"
-                id="image"
-                value={e => setImage(e.target.value)}
-                placeholder='Write a product description'
-                setImage={setImage}
                 />
+                
+                <div className="space-y-4 border p-4 rounded-md bg-gray-50">
+                    <h3 className="text-sm font-semibold text-gray-700">Ảnh sản phẩm (Chọn 1 trong 2 cách)</h3>
+                    
+                    {/* Option 1: URL */}
+                    <TextInput
+                        label="Cách 1: Dán Link ảnh từ mạng"
+                        name="image"
+                        type='text'
+                        value={image}
+                        onChange={(e) => setImage(e.target.value)}
+                        placeholder="VD: https://images.unsplash.com/photo..."
+                    />
+
+                    <div className="relative">
+                        <div className="absolute inset-0 flex items-center" aria-hidden="true">
+                            <div className="w-full border-t border-gray-300"></div>
+                        </div>
+                        <div className="relative flex justify-center">
+                            <span className="bg-gray-50 px-2 text-sm text-gray-500">HOẶC</span>
+                        </div>
+                    </div>
+
+                    {/* Option 2: Upload */}
+                    <UploadImage
+                        name="image"
+                        id="image"
+                        setImage={setImage}
+                    />
+                </div>
 
                 <div>
                     <label htmlFor="description" className="block text-sm font-medium text-gray-700">

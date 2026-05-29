@@ -5,7 +5,7 @@ import 'chart.js/auto';
 const AdminStatsChart = ({ stats }) => {
   // Data for Pie Chart
   const pieData = {
-    labels: ['Total Orders', 'Total Products', 'Total Reviews', 'Total Users'],
+    labels: ['Tổng đơn hàng', 'Tổng sản phẩm', 'Tổng đánh giá', 'Tổng người dùng'],
     datasets: [
       {
         label: 'Admin Stats',
@@ -42,10 +42,10 @@ const AdminStatsChart = ({ stats }) => {
   });
 
   const lineData = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
     datasets: [
       {
-        label: 'Monthly Earnings',
+        label: 'Thu nhập hàng tháng',
         data, 
         fill: false,
         backgroundColor: '#36A2EB',
@@ -63,7 +63,7 @@ const AdminStatsChart = ({ stats }) => {
 
   return (
     <div className="mt-12 space-y-8">
-      <h2 className="text-xl font-semibold mb-4">Admin Stats Overview</h2>
+      <h2 className="text-xl font-semibold mb-4">Tổng quan thống kê quản trị</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Pie Chart */}
         <div className="max-h-96 w-full">

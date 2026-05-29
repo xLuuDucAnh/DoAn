@@ -9,6 +9,10 @@ const ProductCards = ({ products }) => {
     const dispatch = useDispatch();
 
     const handleAddToCart = (product) => {
+        if (product.stock === 0) {
+            alert("Sản phẩm này đã hết hàng!");
+            return;
+        }
         dispatch(addToCart(product))
     }
     return (
@@ -24,16 +28,23 @@ const ProductCards = ({ products }) => {
                             />
                         </Link>
 
+                        {product.stock === 0 && (
+                            <div className='absolute top-3 left-3 bg-red-500 text-white px-2 py-1 text-xs font-bold rounded'>
+                                Hết hàng
+                            </div>
+                        )}
+
                         <div className='hover:block absolute top-3 right-3'>
                             <button
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     handleAddToCart(product)
                                 }}
+                                disabled={product.stock === 0}
+                                className={product.stock === 0 ? 'opacity-50 cursor-not-allowed' : ''}
                             >
-                                < i className="ri-shopping-cart-2-line bg-primary p-1.5 text-white hover:bg-primary-dark "></i>
+                                < i className={`ri-shopping-cart-2-line bg-primary p-1.5 text-white ${product.stock === 0 ? '' : 'hover:bg-primary-dark'}`}></i>
                             </button>
-
                         </div>
                     </div>
                     <div className="product__card__content">

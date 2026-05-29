@@ -8,15 +8,15 @@ const PaymentSuccess = () => {
 
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
-    const sessionId = query.get('session_id');
+    const orderId = query.get('orderId');
 
-    if (sessionId) {
+    if (orderId) {
       fetch(`${getBaseUrl()}/api/orders/confirm-payment`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ session_id: sessionId }),
+        body: JSON.stringify({ orderId }),
       })
         .then((res) => res.json())
         .then((data) => setOrder(data.order))

@@ -1,12 +1,13 @@
 const express = require("express");
 const Order = require("./orders.model");
+const Products = require("../products/products.model");
 const router = express.Router();
 const crypto = require("crypto");
 const https = require("https");
 
 // Create MoMo Payment
 router.post("/create-momo-payment", async (req, res) => {
-  const { amount, orderId, orderInfo } = req.body;
+  const { amount, orderId, orderInfo, products, email } = req.body;
   const partnerCode = process.env.MOMO_PARTNER_CODE;
   const accessKey = process.env.MOMO_ACCESS_KEY;
   const secretKey = process.env.MOMO_SECRET_KEY;
@@ -16,69 +17,109 @@ router.post("/create-momo-payment", async (req, res) => {
   const requestId = orderId;
   const extraData = "";
 
-  // Signature for AIO v2 Create endpoint (Alphabetical order)
-  const rawSignature = `accessKey=${accessKey}&amount=${amount}&extraData=${extraData}&ipnUrl=${ipnUrl}&orderId=${orderId}&orderInfo=${orderInfo}&partnerCode=${partnerCode}&redirectUrl=${redirectUrl}&requestId=${requestId}&requestType=${requestType}`;
+  try {
+    // Signature for AIO v2 Create endpoint (Alphabetical order)
+    const rawSignature = `accessKey=${accessKey}&amount=${amount}&extraData=${extraData}&ipnUrl=${ipnUrl}&orderId=${orderId}&orderInfo=${orderInfo}&partnerCode=${partnerCode}&redirectUrl=${redirectUrl}&requestId=${requestId}&requestType=${requestType}`;
 
-  const signature = crypto
-    .createHmac("sha256", secretKey)
-    .update(rawSignature)
-    .digest("hex");
+    const signature = crypto
+      .createHmac("sha256", secretKey)
+      .update(rawSignature)
+      .digest("hex");
 
-  console.log("Raw Signature String (AIO v2):", rawSignature);
-  console.log("Generated Signature (AIO v2):", signature);
-
-  const requestBody = JSON.stringify({
-    partnerCode,
-    accessKey,
-    requestId,
-    amount,
-    orderId,
-    orderInfo,
-    redirectUrl,
-    ipnUrl,
-    extraData,
-    requestType,
-    signature,
-    lang: "vi",
-  });
-
-  console.log("MoMo AIO v2 Body:", requestBody);
-
-  const options = {
-    hostname: "test-payment.momo.vn",
-    port: 443,
-    path: "/v2/gateway/api/create",
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Content-Length": Buffer.byteLength(requestBody),
-    },
-  };
-
-  const momoReq = https.request(options, (momoRes) => {
-    let data = "";
-    momoRes.on("data", (chunk) => {
-      data += chunk;
+    const requestBody = JSON.stringify({
+      partnerCode,
+      accessKey,
+      requestId,
+      amount,
+      orderId,
+      orderInfo,
+      redirectUrl,
+      ipnUrl,
+      extraData,
+      requestType,
+      signature,
+      lang: "vi",
     });
-    momoRes.on("end", () => {
-      try {
-        const responseData = JSON.parse(data);
-        console.log("MoMo Response:", responseData);
-        res.status(200).json(responseData);
-      } catch (e) {
-        res.status(500).json({ error: "Invalid response from MoMo", raw: data });
-      }
+
+    const options = {
+      hostname: "test-payment.momo.vn",
+      port: 443,
+      path: "/v2/gateway/api/create",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Content-Length": Buffer.byteLength(requestBody),
+      },
+    };
+
+    // Save order as pending before redirecting to MoMo
+    const newOrder = new Order({
+        orderId,
+        products,
+        amount,
+        email,
+        status: "pending"
     });
-  });
+    await newOrder.save();
 
-  momoReq.on("error", (error) => {
-    console.error("MoMo Error:", error);
-    res.status(500).json({ error: "Failed to create MoMo payment" });
-  });
+    // Deduct stock immediately when user initiates payment
+    for (const item of products) {
+      await Products.updateOne(
+        { _id: item.productId },
+        { $inc: { stock: -item.quantity } }
+      );
+    }
 
-  momoReq.write(requestBody);
-  momoReq.end();
+    const momoReq = https.request(options, (momoRes) => {
+      let data = "";
+      momoRes.on("data", (chunk) => {
+        data += chunk;
+      });
+      momoRes.on("end", () => {
+        try {
+          const responseData = JSON.parse(data);
+          res.status(200).json(responseData);
+        } catch (e) {
+          res.status(500).json({ error: "Invalid response from MoMo", raw: data });
+        }
+      });
+    });
+
+    momoReq.on("error", (error) => {
+      console.error("MoMo Error:", error);
+      res.status(500).json({ error: "Failed to create MoMo payment" });
+    });
+
+    momoReq.write(requestBody);
+    momoReq.end();
+  } catch (error) {
+    console.error("Error creating order:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
+
+// Confirm Payment and update order status
+router.post("/confirm-payment", async (req, res) => {
+    const { orderId } = req.body;
+  
+    try {
+      const order = await Order.findOne({ orderId });
+  
+      if (!order) {
+        return res.status(404).json({ message: "Order not found" });
+      }
+
+
+  
+      order.status = "processing"; // Update status to processing after success
+      await order.save();
+  
+      res.status(200).json({ message: "Payment confirmed and order updated", order });
+    } catch (error) {
+      console.error("Error confirming payment:", error);
+      res.status(500).json({ message: "Server error" });
+    }
+  });
 
 router.get("/:email", async (req, res) => {
   const email = req.params.email;

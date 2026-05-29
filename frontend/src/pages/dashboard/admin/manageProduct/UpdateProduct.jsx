@@ -48,12 +48,13 @@ const UpdateProduct = () => {
         color: '',
         price: '',
         description: '',
-        image: '' // This will store the URL or the image file
+        image: '', // This will store the URL or the image file
+        stock: 0
     });
     const [newImage, setNewImage] = useState(null); // For storing the new image
 
     const { data: productData, isLoading: isProductLoading, error: fetchError, refetch } = useFetchProductByIdQuery(id); // Add refetch
-    const { name, category, color, description, image: imageURL, price } = productData?.product || {};
+    const { name, category, color, description, image: imageURL, price, stock } = productData?.product || {};
 
     const [updateProduct, { isLoading: isUpdating, error: updateError }] = useUpdateProductMutation();
 
@@ -65,7 +66,8 @@ const UpdateProduct = () => {
                 color: color || '',
                 price: price || '',
                 description: description || '',
-                image: imageURL || ''
+                image: imageURL || '',
+                stock: stock || 0
             });
         }
     }, [productData]);
@@ -91,6 +93,23 @@ const UpdateProduct = () => {
             image: newImage ? newImage : product.image,
             author: user?._id
         };
+
+        if (!updatedProduct.name) {
+            alert('Vui lòng nhập tên sản phẩm.');
+            return;
+        }
+        if (!updatedProduct.category) {
+            alert('Vui lòng chọn danh mục sản phẩm.');
+            return;
+        }
+        if (updatedProduct.price === '' || updatedProduct.price === null) {
+            alert('Vui lòng nhập giá sản phẩm.');
+            return;
+        }
+        if (!updatedProduct.image) {
+            alert('Vui lòng đảm bảo đã có ảnh sản phẩm.');
+            return;
+        }
 
         try {
             await updateProduct({ id: id, ...updatedProduct }).unwrap();
@@ -147,15 +166,56 @@ const UpdateProduct = () => {
                     value={product.price}
                     onChange={handleChange}
                 />
+                <TextInput
+                    label="Số lượng tồn kho"
+                    name="stock"
+                    type="number"
+                    placeholder="100"
+                    value={product.stock}
+                    onChange={handleChange}
+                />
 
                 {/* image upload */}
-                <UploadImage
-                    name="image"
-                    id="image"
-                    value={newImage || product.image}
-                    setImage={handleImageChange}
-                    placeholder='Upload a product image'
-                />
+                <div className="space-y-4 border p-4 rounded-md bg-gray-50">
+                    <h3 className="text-sm font-semibold text-gray-700">Ảnh sản phẩm</h3>
+                    
+                    {/* Option 1: URL */}
+                    <TextInput
+                        label="Cách 1: Nhập trực tiếp Link ảnh"
+                        name="image"
+                        type='text'
+                        value={newImage || product.image}
+                        onChange={(e) => {
+                            // If user types a URL, treat it as newImage
+                            setNewImage(e.target.value);
+                        }}
+                        placeholder="VD: https://images.unsplash.com/photo..."
+                    />
+
+                    <div className="relative">
+                        <div className="absolute inset-0 flex items-center" aria-hidden="true">
+                            <div className="w-full border-t border-gray-300"></div>
+                        </div>
+                        <div className="relative flex justify-center">
+                            <span className="bg-gray-50 px-2 text-sm text-gray-500">HOẶC</span>
+                        </div>
+                    </div>
+
+                    {/* Option 2: Upload */}
+                    <div>
+                        {product.image && !newImage && (
+                            <div className="mb-2">
+                                <p className="text-xs text-gray-500 mb-1">Ảnh hiện tại:</p>
+                                <img src={product.image} alt="Current" className="w-32 h-32 object-cover rounded shadow-sm border border-gray-200" />
+                            </div>
+                        )}
+                        <UploadImage
+                            name="image"
+                            id="image"
+                            setImage={setNewImage}
+                        />
+                    </div>
+                </div>
 
                 {/* description */}
                 <div>

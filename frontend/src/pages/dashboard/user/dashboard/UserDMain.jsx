@@ -22,7 +22,7 @@ const UserDMain = () => {
 
   // Prepare data for the bar chart
   const data = {
-    labels: ['Total Payments', 'Total Reviews', 'Total Purchased Products'],
+    labels: ['Tổng thanh toán', 'Tổng đánh giá', 'Tổng sản phẩm đã mua'],
     datasets: [
       {
         label: 'User Stats',
@@ -44,8 +44,8 @@ const UserDMain = () => {
       tooltip: {
         callbacks: {
           label: function (tooltipItem) {
-            if (tooltipItem.label === 'Total Payments') {
-              return `Total Payments: $${tooltipItem.raw.toFixed(2)}`;
+            if (tooltipItem.label === 'Tổng thanh toán') {
+              return `Tổng thanh toán: ${new Intl.NumberFormat('vi-VN').format(Math.round(tooltipItem.raw))} đ`;
             }
             return `${tooltipItem.label}: ${tooltipItem.raw}`;
           },

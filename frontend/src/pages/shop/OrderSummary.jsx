@@ -26,6 +26,8 @@ const OrderSummary = () => {
         amount: amountVND,
         orderId: `order-${Date.now()}`,
         orderInfo: "Thanh toan don hang tu Lebaba Store",
+        products: products.map(p => ({ productId: p._id, quantity: p.quantity })),
+        email: user?.email,
       };
 
       const response = await fetch(`${getBaseUrl()}/api/orders/create-momo-payment`, {
