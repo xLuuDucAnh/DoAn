@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { addToCart } from '../../../redux/features/cart/cartSlice';
 import ReviewsCard from '../reviews/ReviewsCard';
 import RecommendedProducts from '../../../components/RecommendedProducts';
+import fallbackProductImage from '../../../assets/card-1.png';
 
 const SingleProduct = () => {
     const { id } = useParams();
@@ -74,6 +75,10 @@ const SingleProduct = () => {
                         <img
                             src={singleProduct.image}
                             alt={singleProduct.name}
+                            onError={(e) => {
+                                e.currentTarget.onerror = null;
+                                e.currentTarget.src = fallbackProductImage;
+                            }}
                             className="rounded-md w-full h-auto shadow-md"
                         />
                     </div>

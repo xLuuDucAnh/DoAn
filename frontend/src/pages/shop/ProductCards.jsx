@@ -3,6 +3,7 @@ import RatingStars from '../../components/RatingStars'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../redux/features/cart/cartSlice';
+import fallbackProductImage from '../../assets/card-1.png';
 
 
 const ProductCards = ({ products }) => {
@@ -24,6 +25,10 @@ const ProductCards = ({ products }) => {
                             <img
                                 src={product.image}
                                 alt={product.name}
+                                onError={(e) => {
+                                    e.currentTarget.onerror = null;
+                                    e.currentTarget.src = fallbackProductImage;
+                                }}
                                 className='max-h-96 md:h-64 w-full object-cover hover:scale-105 transition-all duration-300'
                             />
                         </Link>
