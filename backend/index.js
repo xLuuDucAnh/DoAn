@@ -28,6 +28,7 @@ const orderRoutes = require('./src/orders/orders.route');
 const reviewRoutes = require('./src/reviews/reviews.router');
 const statsRoutes = require('./src/stats/stats.route');
 const recommendationRoutes = require('./src/recommendations/recommendation.route');
+const contactRoutes = require('./src/contacts/contacts.route');
 
 // Routes setup
 
@@ -37,6 +38,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/products/recommendations', recommendationRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/stats', statsRoutes);
+app.use('/api/contacts', contactRoutes);
 
 
 async function main() {

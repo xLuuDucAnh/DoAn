@@ -1,6 +1,7 @@
 import React from 'react'
 import { useLogoutUserMutation } from '../../redux/features/auth/authApi';
 import { useDispatch } from 'react-redux';
+import { logout } from '../../redux/features/auth/authSlice';
 import { Link, NavLink } from 'react-router-dom';
 
 const AdminDashboard = () => {
@@ -73,6 +74,16 @@ const AdminDashboard = () => {
               }
             >
               Quản lý đơn hàng
+            </NavLink>
+          </li>
+          <li className="mb-3">
+            <NavLink
+              to="/dashboard/manage-contacts"
+              className={({ isActive }) =>
+                isActive ? "text-blue-600 font-bold" : "text-black"
+              }
+            >
+              Quản lý liên hệ
             </NavLink>
           </li>
         </ul>

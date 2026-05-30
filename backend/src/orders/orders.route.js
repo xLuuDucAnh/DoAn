@@ -66,7 +66,7 @@ router.post("/create-momo-payment", async (req, res) => {
     for (const item of products) {
       await Products.updateOne(
         { _id: item.productId },
-        { $inc: { stock: -item.quantity } }
+        { $inc: { stock: -item.quantity, totalSold: item.quantity } }
       );
     }
 

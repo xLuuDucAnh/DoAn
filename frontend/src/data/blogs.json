@@ -26,6 +26,27 @@
         "subtitle": "New York Times",
         "date": "25th May 2025",
         "imageUrl": "https://plus.unsplash.com/premium_photo-1713720663924-4e3fe8f20f79?q=80&w=1948&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-      }
+    },
+    {
+      "id": 5,
+      "title": "Xu hướng thời trang nam mùa hè 2026",
+      "subtitle": "Phong cách năng động",
+      "date": "15th May 2026",
+      "imageUrl": "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?q=80&w=1974&auto=format&fit=crop"
+    },
+    {
+      "id": 6,
+      "title": "Cách chọn phụ kiện phù hợp với áo phông",
+      "subtitle": "Mẹo phối đồ",
+      "date": "20th May 2026",
+      "imageUrl": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1999&auto=format&fit=crop"
+    },
+    {
+      "id": 7,
+      "title": "Lebaba: Hành trình 5 năm gắn kết khách hàng",
+      "subtitle": "Kỷ niệm 5 năm",
+      "date": "01st June 2026",
+      "imageUrl": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=2070&auto=format&fit=crop"
+    }
   ]
   

@@ -50,7 +50,10 @@ const ProductCards = ({ products }) => {
                     <div className="product__card__content">
                         <h4>{product.name}</h4>
                         <p>{new Intl.NumberFormat('vi-VN').format(product.price)} đ {product.oldPrice ? <s>{new Intl.NumberFormat('vi-VN').format(product.oldPrice)} đ</s> : null}</p>
-                        <RatingStars rating={product.rating} />
+                        <div className="flex items-center justify-between mt-2">
+                             <RatingStars rating={product.rating} />
+                             <span className="text-xs text-gray-500">Đã bán: {product.totalSold || 0}</span>
+                        </div>
                     </div>
                 </div>
             ))}

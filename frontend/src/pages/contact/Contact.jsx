@@ -1,6 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useSubmitContactMutation } from '../../redux/features/contacts/contactsApi';
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [submitContact, { isLoading, isSuccess, isError, error }] = useSubmitContactMutation();
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData(prev => ({ ...prev, [id]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await submitContact(formData).unwrap();
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      alert("Tin nhắn của bạn đã được gửi thành công!");
+    } catch (err) {
+      console.error("Failed to submit contact:", err);
+      alert("Gửi tin nhắn thất bại, vui lòng thử lại.");
+    }
+  };
+
   return (
     <div>
       {/* Hero Section */}
@@ -68,13 +94,16 @@ const Contact = () => {
           {/* Right Column: Contact Form */}
           <div className="bg-white p-8 rounded-lg shadow-lg border border-gray-100">
             <h3 className="text-2xl font-bold mb-6 text-gray-800">Gửi tin nhắn</h3>
-            <form className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Họ và tên</label>
                 <input 
                   type="text" 
                   id="name" 
+                  value={formData.name}
+                  onChange={handleChange}
                   placeholder="Nhập tên của bạn"
+                  required
                   className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                 />
               </div>
@@ -83,7 +112,10 @@ const Contact = () => {
                 <input 
                   type="email" 
                   id="email" 
+                  value={formData.email}
+                  onChange={handleChange}
                   placeholder="Nhập địa chỉ email"
+                  required
                   className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                 />
               </div>
@@ -92,7 +124,10 @@ const Contact = () => {
                 <input 
                   type="text" 
                   id="subject" 
+                  value={formData.subject}
+                  onChange={handleChange}
                   placeholder="Chủ đề bạn quan tâm"
+                  required
                   className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                 />
               </div>
@@ -101,15 +136,19 @@ const Contact = () => {
                 <textarea 
                   id="message" 
                   rows="4" 
+                  value={formData.message}
+                  onChange={handleChange}
                   placeholder="Nhập nội dung tin nhắn..."
+                  required
                   className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                 ></textarea>
               </div>
               <button 
                 type="submit" 
-                className="w-full bg-primary text-white py-3 rounded-md font-bold hover:bg-primary-dark transition-colors shadow-md"
+                disabled={isLoading}
+                className={`w-full bg-primary text-white py-3 rounded-md font-bold hover:bg-primary-dark transition-colors shadow-md ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
-                Gửi ngay
+                {isLoading ? 'Đang gửi...' : 'Gửi ngay'}
               </button>
             </form>
           </div>

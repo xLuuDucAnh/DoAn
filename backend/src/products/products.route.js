@@ -45,7 +45,7 @@ router.post("/create-product", async (req, res) => {
 // Get all posts (public route)
 router.get("/", async (req, res) => {
   try {
-    const { category, color, minPrice, maxPrice, page = 1, limit = 10, search } = req.query;
+    const { category, color, minPrice, maxPrice, page = 1, limit = 10, search, sort } = req.query;
 
     const filter = {};
 
@@ -77,11 +77,40 @@ router.get("/", async (req, res) => {
     const totalProducts = await Products.countDocuments(filter);
     const totalPages = Math.ceil(totalProducts / parseInt(limit));
 
-    const products = await Products.find(filter)
+    let sortOption = { createdAt: -1 };
+    if (sort === "trending" || sort === "totalSold") {
+      sortOption = { totalSold: -1 };
+    }
+
+    const productsFetch = await Products.find(filter)
       .skip(skip)
       .limit(parseInt(limit))
       .populate("author", "email")
-      .sort({ createdAt: -1 });
+      .sort(sortOption);
+
+    // Efficiently get sold counts for all products in the current result set
+    const Order = require("../orders/orders.model");
+    const productIds = productsFetch.map(p => p._id.toString());
+    
+    const soldCounts = await Order.aggregate([
+      { $unwind: "$products" },
+      { $match: { 
+          "products.productId": { $in: productIds },
+          // Count all orders including pending ones as requested
+      }},
+      { $group: { _id: "$products.productId", totalSold: { $sum: "$products.quantity" } } }
+    ]);
+
+    // Map counts back to products
+    const soldCountMap = soldCounts.reduce((acc, curr) => {
+      acc[curr._id] = curr.totalSold;
+      return acc;
+    }, {});
+
+    const products = productsFetch.map(p => ({
+      ...p.toObject(),
+      totalSold: soldCountMap[p._id.toString()] || 0
+    }));
 
     res.status(200).send({ products, totalPages, totalProducts });
   } catch (error) {
@@ -112,7 +141,22 @@ router.get("/:id", async (req, res) => {
       "username email"
     );
 
-    res.status(200).send({ product, reviews });
+    // Calculate total sold count from orders
+    const Order = require("../orders/orders.model");
+    const soldCount = await Order.aggregate([
+      { $unwind: "$products" },
+      {
+        $match: {
+          "products.productId": productId.toString(),
+          // Count all orders including pending ones as requested
+        },
+      },
+      { $group: { _id: null, totalSold: { $sum: "$products.quantity" } } },
+    ]);
+
+    const totalSold = soldCount.length > 0 ? soldCount[0].totalSold : 0;
+
+    res.status(200).send({ product, reviews, totalSold });
   } catch (error) {
     console.error("Error fetching post:", error);
     res.status(500).send({ message: "Failed to fetch post" });

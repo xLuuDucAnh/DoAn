@@ -94,6 +94,9 @@ const SingleProduct = () => {
                                 <strong>Đánh giá:</strong>
                                 <RatingStars rating={singleProduct.rating} />
                             </div>
+                            {data && (
+                                <p><strong>Đã bán:</strong> {data.totalSold || 0} sản phẩm</p>
+                            )}
                         </div>
 
                         {/* Add to Cart Button */}

@@ -11,6 +11,7 @@ const ProductSchema = new mongoose.Schema(
     color: { type: String },
     stock: { type: Number, default: 0 },
     rating: { type: Number, default: 0 },
+    totalSold: { type: Number, default: 0 },
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
   },
   { timestamps: true }
