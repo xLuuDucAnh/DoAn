@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import OrderSummary from './OrderSummary';
 import { removeFromCart, updateQuantity } from '../../redux/features/cart/cartSlice';
+import fallbackProductImage from '../../assets/card-1.png';
 
 const CartModal = ({ isOpen, onClose, products }) => {
 
@@ -48,7 +49,15 @@ const CartModal = ({ isOpen, onClose, products }) => {
                 <div key={index} className="flex flex-col md:flex-row md:items-center md:justify-between shadow-md md:p-5 p-2 mb-4">
                   <div className='flex items-center'>
                     <span className='mr-4 px-1 bg-primary text-white rounded-full'>0{index + 1}</span>
-                    <img src={item.image} alt={item.name} className="size-12 object-cover mr-4" />
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = fallbackProductImage;
+                      }}
+                      className="size-12 object-cover mr-4"
+                    />
                     <div>
                       <h5 className="text-lg font-medium">{item.name}</h5>
                       <p className="text-gray-600 text-sm">{new Intl.NumberFormat('vi-VN').format(item.price)} đ</p>
